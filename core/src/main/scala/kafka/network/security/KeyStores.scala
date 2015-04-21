@@ -18,6 +18,8 @@
 package kafka.network.security
 
 import kafka.network.security.store.JKSInitializer
+import kafka.network.security.store.P12Initializer
+
 import kafka.common.UnknownKeyStoreException
 import javax.net.ssl.SSLContext
 
@@ -29,6 +31,7 @@ object KeyStores {
   def getKeyStore(name: String): StoreInitializer = {
     name.toLowerCase match {
       case JKSInitializer.name => JKSInitializer
+      case P12Initializer.name => P12Initializer
       case _ => throw new UnknownKeyStoreException("%s is an unknown key store".format(name))
     }
   }

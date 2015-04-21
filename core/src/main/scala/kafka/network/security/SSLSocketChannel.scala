@@ -319,7 +319,7 @@ class SSLSocketChannel(val underlying: SocketChannel, val sslEngine: SSLEngine)
         writeRaw(myNetData)
         myNetData.remaining > 0
       } else mustWrite
-    }    
+    }
     def readIfReadyAndNeeded(mustRead: Boolean): Boolean = {
       if ((o & SelectionKey.OP_READ) != 0) {
         if (readRaw() < 0) {
