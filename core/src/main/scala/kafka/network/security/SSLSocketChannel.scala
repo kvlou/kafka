@@ -32,7 +32,7 @@ object SSLSocketChannel {
 
   def makeSecureClientConnection(sch: SocketChannel, host: String, port: Int) = {
     val engine = SecureAuth.sslContext.createSSLEngine(host, port)
-    engine.setEnabledProtocols(Array("SSLv3"))
+    engine.setEnabledProtocols(Array("TLSv1"))
     engine.setUseClientMode(true)
     new SSLSocketChannel(sch, engine)
   }
@@ -46,7 +46,7 @@ object SSLSocketChannel {
       case _ =>
         SecureAuth.sslContext.createSSLEngine()
     }
-    engine.setEnabledProtocols(Array("SSLv3"))
+    engine.setEnabledProtocols(Array("TLSv1"))
     engine.setUseClientMode(false)
     if (wantClientAuth) {
       engine.setWantClientAuth(true)
@@ -321,7 +321,7 @@ class SSLSocketChannel(val underlying: SocketChannel, val sslEngine: SSLEngine)
         writeRaw(myNetData)
         myNetData.remaining > 0
       } else mustWrite
-    }    
+    }
     def readIfReadyAndNeeded(mustRead: Boolean): Boolean = {
       if ((o & SelectionKey.OP_READ) != 0) {
         if (readRaw() < 0) {
